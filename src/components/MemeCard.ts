@@ -1,16 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-declare const process: {
-  env: {
-    SUPABASE_URL: string;
-    SUPABASE_KEY: string;
-  }
-};
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+import { supabase } from '../services/supabase';
 
 export class MemeCard extends HTMLElement {
   private url: string = '';

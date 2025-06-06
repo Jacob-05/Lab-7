@@ -35,7 +35,11 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html'
     }),
-    new Dotenv()
+    new Dotenv({
+      systemvars: true,
+      safe: true,
+      defaults: true
+    })
   ],
   devServer: {
     static: {
