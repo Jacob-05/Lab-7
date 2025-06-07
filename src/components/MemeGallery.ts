@@ -45,9 +45,6 @@ export class MemeGallery extends HTMLElement {
           font-size: 1.2rem;
         }
       </style>
-      <div class="gallery-container">
-        <div class="loading">Cargando memes...</div>
-      </div>
     `;
 
     this.container = this.shadowRoot.querySelector('.gallery-container')!;

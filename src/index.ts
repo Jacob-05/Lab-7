@@ -7,7 +7,7 @@ import { MemeSortToggle } from './components/MemeSortToggle';
 
 // Registrar los componentes web
 customElements.define('meme-upload-form', MemeUploadForm);
-customElements.define('meme-gallery', MemeGallery);
 customElements.define('meme-card', MemeCard);
+customElements.define('meme-gallery', MemeGallery);
 customElements.define('meme-modal', MemeModal);
 customElements.define('meme-sort-toggle', MemeSortToggle); 
