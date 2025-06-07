@@ -1,3 +1,5 @@
+import { supabase } from '../services/supabase';
+
 export class MemeModal extends HTMLElement {
   private modal: HTMLDivElement | null = null;
   private content: HTMLDivElement | null = null;
@@ -108,15 +110,19 @@ export class MemeModal extends HTMLElement {
     });
   }
 
-  private show(url: string, type: string) {
+  private async show(url: string, type: string) {
     if (!this.content) return;
 
     this.currentUrl = url;
     this.currentType = type;
 
+    const { data: { publicUrl } } = supabase.storage
+      .from('memes')
+      .getPublicUrl(url);
+
     this.content.innerHTML = type === 'image'
-      ? `<img src="${url}" alt="Meme">`
-      : `<video src="${url}" controls autoplay loop></video>`;
+      ? `<img src="${publicUrl}" alt="Meme">`
+      : `<video src="${publicUrl}" controls autoplay loop></video>`;
 
     this.classList.add('visible');
     document.body.style.overflow = 'hidden';
@@ -126,7 +132,7 @@ export class MemeModal extends HTMLElement {
     this.classList.remove('visible');
     document.body.style.overflow = '';
     
-    // Detener la reproducción del video si existe
+
     const video = this.content?.querySelector('video');
     if (video) {
       video.pause();

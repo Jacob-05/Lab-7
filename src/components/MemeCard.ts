@@ -84,8 +84,8 @@ export class MemeCard extends HTMLElement {
       </style>
       <div class="meme-container">
         ${this.type === 'image' 
-          ? `<img src="${publicUrl}" alt="Meme">`
-          : `<video src="${publicUrl}" muted loop></video>`
+          ? `<img src="${publicUrl}" alt="Meme" loading="lazy">`
+          : `<video src="${publicUrl}" muted loop loading="lazy"></video>`
         }
         <div class="overlay">
           Click para ver

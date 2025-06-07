@@ -52,16 +52,47 @@ export class MemeGallery extends HTMLElement {
 
   private async loadMemes() {
     try {
-      const { data, error } = await supabase.storage
+      const { data: folders, error: foldersError } = await supabase.storage
         .from('memes')
-        .list();
+        .list('');
 
-      if (error) throw error;
+      if (foldersError) {
+        console.error('Error al cargar carpetas:', foldersError);
+        throw foldersError;
+      }
 
-      this.memes = data;
+      let allMemes: any[] = [];
+
+      for (const folder of folders || []) {
+        if (folder.name) {
+          const { data: files, error: filesError } = await supabase.storage
+            .from('memes')
+            .list(folder.name);
+
+          if (filesError) {
+            console.error(`Error al cargar archivos de ${folder.name}:`, filesError);
+            continue;
+          }
+
+          if (files) {
+
+            const filesWithPath = files.map(file => ({
+              ...file,
+              name: `${folder.name}/${file.name}`
+            }));
+            allMemes = [...allMemes, ...filesWithPath];
+          }
+        }
+      }
+
+
+      this.memes = allMemes.sort((a, b) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+      
       this.renderMemes();
     } catch (error) {
-      console.error('Error loading memes:', error);
+      console.error('Error al cargar memes:', error);
       this.showError();
     }
   }
@@ -73,11 +104,12 @@ export class MemeGallery extends HTMLElement {
 
     const sortedMemes = this.isRandomOrder
       ? [...this.memes].sort(() => Math.random() - 0.5)
-      : this.memes.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      : this.memes;
 
     sortedMemes.forEach(meme => {
       const memeCard = document.createElement('meme-card') as MemeCard;
-      memeCard.setAttribute('url', meme.name);
+      const fullPath = meme.name.includes('/') ? meme.name : `${new Date().toISOString().split('T')[0]}/${meme.name}`;
+      memeCard.setAttribute('url', fullPath);
       memeCard.setAttribute('type', this.getFileType(meme.name));
       this.container.appendChild(memeCard);
     });
