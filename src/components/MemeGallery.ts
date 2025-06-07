@@ -97,13 +97,11 @@ export class MemeGallery extends HTMLElement {
   }
 
   private setupEventListeners() {
-    // Escuchar el evento de cambio de orden
     document.addEventListener('sort-order-changed', ((e: CustomEvent) => {
       this.isRandomOrder = e.detail.random;
       this.renderMemes();
     }) as EventListener);
 
-    // Escuchar el evento de nuevo meme subido
     document.addEventListener('meme-uploaded', () => {
       this.loadMemes();
     });

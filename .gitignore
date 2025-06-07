@@ -2,3 +2,4 @@ node_modules
 supabaseConfig.env
 # Local Netlify folder
 .netlify
+bundle.js

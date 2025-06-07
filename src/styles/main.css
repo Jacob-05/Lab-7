@@ -1,21 +1,85 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=VT323&display=swap');
 
 :root {
-  --primary-color: #4f46e5;
+  --primary-color: #00d6ee;
   --secondary-color: #818cf8;
   --background-color: #f3f4f6;
   --text-color: #1f2937;
 }
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') center center/cover no-repeat fixed;
+  position: relative;
+  font-family: 'Orbitron', 'VT323', monospace, system-ui, -apple-system, sans-serif;
+  color: #fff;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(40,0,80,0.7) 0%, rgba(0,0,0,0.8) 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
+  background: rgba(30, 0, 60, 0.7);
+  border-radius: 1.5rem;
+  box-shadow: 0 0 40px 10px #ff00cc44, 0 0 0 2px #00fff7;
+  padding: 2rem;
+  backdrop-filter: blur(2px);
+}
+
+h1, h2, h3 {
+  font-family: 'Orbitron', 'VT323', monospace;
+  color: #06cbd9;
+  text-shadow: 0 0 8px #05a09d, 0 0 2px #fff;
+  letter-spacing: 2px;
+}
+
+button, .toggle-button {
+  font-family: 'Orbitron', 'VT323', monospace;
+  background: linear-gradient(90deg, #ff00cc 0%, #00fff7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 0 8px #00fff7, 0 0 2px #fff;
+  text-shadow: 0 0 4px #ff00cc;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+button:hover, .toggle-button:hover {
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 0 24px #ff00cc, 0 0 8px #00fff7;
+}
+
+.upload-form, .gallery-container, .preview-item {
+  background: rgba(20, 0, 40, 0.8) !important;
+  border-radius: 1rem;
+  box-shadow: 0 0 16px #00fff7aa, 0 0 2px #ff00cc;
+}
+
+input[type="file"] {
+  color: #fff;
+  background: transparent;
+  border: 1px solid #ff00cc;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #1a0030;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #ff00cc 0%, #00fff7 100%);
+  border-radius: 8px;
 } 

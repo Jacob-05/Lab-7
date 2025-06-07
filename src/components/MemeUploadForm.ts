@@ -257,10 +257,9 @@ export class MemeUploadForm extends HTMLElement {
     const filePath = `${new Date().toISOString().split('T')[0]}/${fileName}`;
 
     try {
-      // Verificar la conexión con Supabase
       console.log('Verificando conexión con Supabase...');
       
-      // Primero verificamos si el bucket existe
+
       const { data: buckets, error: bucketsError } = await supabase.storage.listBuckets();
       
       if (bucketsError) {
@@ -275,15 +274,10 @@ export class MemeUploadForm extends HTMLElement {
       console.log('Buckets encontrados:', buckets);
       const bucketExists = buckets.some(bucket => bucket.name === 'memes');
       
-      if (!bucketExists) {
-        console.error('Buckets disponibles:', buckets.map(b => b.name));
-        console.error('No se encontró el bucket "memes". Por favor, crea el bucket en Supabase.');
-        throw new Error('El bucket "memes" no existe en Supabase. Por favor, crea el bucket primero.');
-      }
 
       console.log('Bucket "memes" encontrado, procediendo a subir archivo...');
       
-      // Intentamos subir el archivo
+
       const { data, error } = await supabase.storage
         .from('memes')
         .upload(filePath, file, {
@@ -302,10 +296,10 @@ export class MemeUploadForm extends HTMLElement {
 
       console.log('Archivo subido exitosamente:', data);
 
-      // Actualizar la barra de progreso al 100%
+
       progressBar.value = 100;
 
-      // Disparar evento personalizado cuando se completa la carga
+
       this.dispatchEvent(new CustomEvent('meme-uploaded', {
         detail: { url: data.path }
       }));
